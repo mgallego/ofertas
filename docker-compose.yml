@@ -1,0 +1,36 @@
+version: '2'
+services:
+  web:
+    build: .
+    container_name: ofertas_app
+    ports:
+     - "8000:8000"
+    volumes:
+     - .:/code
+    env_file:
+        - ".env"
+#    networks:
+#      - bridge2
+#      - default
+
+  mysqldb:
+    image: mysql
+    container_name: ${MYSQL_HOST}
+    restart: always
+    env_file:
+        - ".env"
+    environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+        - "8989:3306"
+    volumes:
+        - "./data/db/mysql:/var/lib/mysql"
+#    networks:
+#      - default
+
+#networks:
+#  bridge2:
+#    external: true
