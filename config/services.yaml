@@ -27,9 +27,21 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    admin.category:
-        class: App\Admin\OffersAdmin
+    App\Admin\OffersAdmin:
         arguments: [~, App\Entity\Offer, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Offer }
         public: true
+
+    App\Doctrine\MakesAdminExtension:
+        tags:
+            - { name: sonata.admin.extension, global: true }
+        public: true
+
+    App\Oauth\Km77OauthUserProvider:
+        arguments:
+            $client: '@eight_points_guzzle.client.api_client'
+            $session: '@session'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $clientKey: '%env(FAPI_KEY)%'
+
