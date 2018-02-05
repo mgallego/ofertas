@@ -30,7 +30,7 @@ class Offer {
     public $text;
 
     /**
-     * @ORM\Column(type="string", length=255, name="make_slug")
+     * @ORM\Column(type="string", length=255)
      */
     public $makeSlug;
 

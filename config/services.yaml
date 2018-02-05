@@ -31,6 +31,8 @@ services:
         arguments: [~, App\Entity\Offer, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Offer }
+        calls:
+            - [ setTemplate, [edit, "OffersAdmin/edit.html.twig"]]
         public: true
 
     App\Doctrine\MakesAdminExtension:
