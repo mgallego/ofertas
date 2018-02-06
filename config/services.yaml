@@ -65,3 +65,7 @@ services:
     App\Manager\MakeManager:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
+
+    App\EventListener\AssignTlptToOffer:
+        tags:
+          - { name: doctrine.event_listener, event: postPersist }

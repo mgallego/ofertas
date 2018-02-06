@@ -109,4 +109,14 @@ class Offer
     {
         return $this->active;
     }
+
+    /**
+     * appendUnassignedTlpt
+     *
+     * @param Tlpt $tlpt
+     */
+    public function appendUnassignedTlpt(Tlpt $tlpt)
+    {
+        $this->unassignedTlpts->add($tlpt);
+    }
 }
