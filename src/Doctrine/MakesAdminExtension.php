@@ -22,7 +22,6 @@ class MakesAdminExtension extends AbstractAdminExtension
         $this->session = $session;
     }
 
-
     /**
      * @param AdminInterface      $admin
      * @param ProxyQueryInterface $query
@@ -32,7 +31,7 @@ class MakesAdminExtension extends AbstractAdminExtension
      */
     public function configureQuery(AdminInterface $admin, ProxyQueryInterface $query, $context = 'list')
     {
-        $query->andWhere('o.make_slug IN (:make_slugs)')->setParameter('make_slugs', $this->session->get('make_slugs'));
+        $query->andWhere('o.makeSlug IN (:make_slugs)')->setParameter('make_slugs', $this->session->get('make_slugs'));
 
         return;
     }

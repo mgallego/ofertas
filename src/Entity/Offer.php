@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="offer")
  * @ApiResource()
  */
-class Offer {
+class Offer
+{
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -78,7 +79,8 @@ class Offer {
      */
     public $unassignedTlpts;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->includedTlpts = new ArrayCollection();
         $this->excludedTlpts = new ArrayCollection();
         $this->unassignedTlpts = new ArrayCollection();
@@ -91,11 +93,13 @@ class Offer {
      *
      * @return Offer
      */
-    public function setActive($active): Offer
+    public function setActive($active): self
     {
         $this->active = $active;
+
         return $this;
     }
+
     /**
      * Get active.
      *

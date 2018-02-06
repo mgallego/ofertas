@@ -26,7 +26,8 @@ class Tlpt
 
     private $offersUnassigned;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->offersIncludedIn = new ArrayCollection();
         $this->offersExcludedIn = new ArrayCollection();
         $this->offersUnassigned = new ArrayCollection();

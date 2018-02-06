@@ -42,10 +42,11 @@ class Km77OauthUserProvider implements UserProviderInterface, OAuthAwareUserProv
 
     /**
      * Km77OauthUserProvider constructor.
+     *
      * @param SessionInterface $session
-     * @param Client $client
-     * @param EntityManager $entityManager
-     * @param string $clientKey
+     * @param Client           $client
+     * @param EntityManager    $entityManager
+     * @param string           $clientKey
      */
     public function __construct(
         SessionInterface $session,
@@ -121,11 +122,12 @@ class Km77OauthUserProvider implements UserProviderInterface, OAuthAwareUserProv
      */
     public function supportsClass($class): bool
     {
-        return $class === Km77User::class;
+        return Km77User::class === $class;
     }
 
     /**
      * @param Km77User $km77User
+     *
      * @return User|null
      */
     private function findUser(Km77User $km77User): ?User

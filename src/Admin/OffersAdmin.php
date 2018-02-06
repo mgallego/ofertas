@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class OffersAdmin extends AbstractAdmin
 {
     protected $formOptions = [
-        'validation_groups' => []
+        'validation_groups' => [],
     ];
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -28,7 +28,7 @@ class OffersAdmin extends AbstractAdmin
                 'choices' => [
                     'Audi' => 'audi',
                     'BMW' => 'bmw',
-                ]
+                ],
             ]);
         $formMapper->add('model');
         $formMapper->add('modelYear');
