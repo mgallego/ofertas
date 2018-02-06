@@ -1,0 +1,16 @@
+hwi_oauth:
+    firewall_names: [secured_area]
+    target_path_parameter: _destination
+    use_referer: true
+    resource_owners:
+        km77:
+            type:                oauth2
+            client_id:           '%env(SSO_CLIENT_ID)%'
+            client_secret:       '%env(SSO_CLIENT_SECRET)%'
+            access_token_url:    '%env(SSO_BASE_URL)%/oauth2/token'
+            authorization_url:   '%env(SSO_BASE_URL)%/oauth2/authorize'
+            infos_url:           '%env(SSO_BASE_URL)%/oauth2/userinfo?schema=openid'
+            scope:               'openid'
+            user_response_class: App\Oauth\UserResponse
+            options:
+                csrf: true

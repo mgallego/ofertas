@@ -1,0 +1,21 @@
+parameters:
+    env(FAPI_BASE_URL): 'https://fapi.km77.com'
+
+eight_points_guzzle:
+    clients:
+        api_client:
+            # Write here the host where to do requests
+            base_url: '%env(FAPI_BASE_URL)%'
+
+            options:
+                timeout: 30
+
+                # Configure headers.
+                # More info: http://docs.guzzlephp.org/en/stable/request-options.html#headers
+                headers:
+                    Accept: "application/json"
+                    User-Agent: "EightpointsGuzzleBundle/7.0"
+
+            # Find plugins here:
+            # https://github.com/8p/EightPointsGuzzleBundle#known-and-supported-plugins
+            plugin: ~

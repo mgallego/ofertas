@@ -1,11 +1,29 @@
-#index:
-#    path: /
-#    defaults: { _controller: 'App\Controller\DefaultController::index' }
+custom_login:
+    path: /login/check-custom
+
+logout:
+    path: /logout
+
+logoutfromaccounts:
+    path: /logoutfromaccounts
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: https://accounts.km77.com/oidc/logout?commonAuthCallerPath=http://sw.km77.local/logout
+        permanent: false
+
+homepage:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /admin
+        permanent: false
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /sonata
+    prefix: /admin
 
 _sonata_admin:
     resource: .
     type: sonata_admin
-    prefix: /sonata
+    prefix: /admin
+
