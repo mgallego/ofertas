@@ -11,9 +11,9 @@ class DumpActiveMakesCommand extends Command
 {
     private $makeManager;
 
-    public function __construct(MakeManager $makeManager)
+    public function __construct(MakeManager $tlptManager)
     {
-        $this->makeManager = $makeManager;
+        $this->makeManager = $tlptManager;
 
         parent::__construct();
     }

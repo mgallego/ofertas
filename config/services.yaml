@@ -47,11 +47,20 @@ services:
             $entityManager: '@doctrine.orm.entity_manager'
             $clientKey: '%env(FAPI_KEY)%'
 
+    App\FapiRepository\TlptsRepository:
+        arguments:
+            $client: '@eight_points_guzzle.client.api_client'
+            $clientKey: '%env(FAPI_KEY)%'
+
     App\FapiRepository\MakesRepository:
         arguments:
             $client: '@eight_points_guzzle.client.api_client'
             $session: '@session'
             $clientKey: '%env(FAPI_KEY)%'
+
+    App\Manager\TlptManager:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
 
     App\Manager\MakeManager:
         arguments:

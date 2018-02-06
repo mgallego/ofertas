@@ -18,7 +18,19 @@ class Tlpt
      * @ORM\Column(type="string")
      * @ORM\Id
      */
-    private $nql;
+    public $nql;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    public $name;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    public $fullName;
 
     private $offersIncludedIn;
 
