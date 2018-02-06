@@ -50,6 +50,6 @@ class Tlpt
      */
     public function __toString(): string
     {
-        return $this->nql;
+        return $this->name;
     }
 }

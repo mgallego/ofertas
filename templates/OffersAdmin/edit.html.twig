@@ -3,18 +3,113 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
-            var data = {
-                id: 'aasd',
-                text: 'Barn owl'
-            };
-            var data1 = {
-                id: 'fgdfg',
-                text: 'Cacafuti'
+            var nqls = [];
+
+            var getNqlFromElement = function (element) {
+                nqlObjects = element.select2('data');
+                $.each(nqlObjects, function(index, nql) {
+                    status = 'unassigned';
+
+                    if ($(element).attr('id').includes('includedTlpts')) {
+                        status = 'included';
+                    } else if ($(element).attr('id').includes('excludedTlpts')) {
+                        status = 'excluded';
+                    }
+                    nqls.push({"id": nql.id, "name": nql.text, "status": status});
+
+                });
             };
 
-            var newOption = new Option(data.text, data.id, false, false);
-            var newOption1 = new Option(data1.text, data1.id, false, false);
-            $('select[id$="_makeSlug"]').append(newOption).append(newOption1).trigger('change');
+            var getAllNqls = function() {
+                fieldsWithNqlValues = [
+                    $('select[id$="_unassignedTlpts"]'),
+                    $('select[id$="_includedTlpts"]'),
+                    $('select[id$="_excludedTlpts"]')
+                ];
+
+                $(fieldsWithNqlValues).each(function() {
+                    extractedNqls = getNqlFromElement(this);
+                    if (extractedNqls != undefined) {
+                        nqls.push(extractedNqls);
+                    }
+                });
+
+                return nqls;
+            }
+
+
+            nqls = getAllNqls();
+            insertNqlsTable(nqls)
+
+            function insertNqlsTable(nqls) {
+                var htmlElement = '<table class="table">'
+                htmlElement += '<tr><th>Vehicle</th><th>Include</th><th>Exclude</th></tr>';
+                $(nqls).each(function(index, nql) {
+                    htmlElement += '<tr>';
+                    htmlElement += '<td data-id="'+nql.id+'">'+nql.name+'</td>';
+                    htmlElement += '<td data-id="'+nql.id+'"><input type="radio" name="radio_'+nql.id+'"';
+                    if (nql.status == 'included') {
+                        htmlElement += ' checked ';
+                    }
+                    htmlElement += ' value="include"></td>';
+                    htmlElement += '<td data-id="'+nql.id+'"><input type="radio" name="radio_'+nql.id+'"';
+                    if (nql.status == 'excluded') {
+                        htmlElement += ' checked ';
+                    }
+                    htmlElement += ' value="exclude"></td>';
+                    htmlElement += '</tr>';
+                });
+
+                vehicleBoxElement = $('.js-vehicles-section > .box-body').first();
+
+                htmlElement += '</table>'
+                vehicleBoxElement.append(htmlElement);
+            }
+
+
+            function handleNql(nql, action, selectorId) {
+                selector = $('select[id$="_'+selectorId+'"]');
+                nqls = selector.select2('data');
+                selectorNqls =  [];
+
+                $.each(nqls, function(index, nql) {
+                    selectorNqls.push(nql.id);
+                });
+
+                if (action === 'remove') {
+                    selectorNqls = $.grep(selectorNqls, function(value) {
+                        return value != nql.id;
+                    });
+                } else if (action === 'add') {
+                    selectorNqls.push(nql.id);
+                }
+
+                selector.val(selectorNqls);
+                selector.trigger('change');
+            };
+
+            function includeNql(nql) {
+                handleNql(nql, 'add', 'includedTlpts');
+                handleNql(nql, 'remove', 'excludedTlpts');
+                handleNql(nql, 'remove', 'unassignedTlpts');
+            };
+
+            function excludeNql(nql) {
+                handleNql(nql, 'add', 'excludedTlpts');
+                handleNql(nql, 'remove', 'includedTlpts');
+                handleNql(nql, 'remove', 'unassignedTlpts');
+            };
+
+
+            $('input[type=radio]').change(function() {
+                nql = {"id": $(this).parent().data('id'), "name": $(this).parent().siblings().first().text() };
+                if (this.value == 'include') {
+                    includeNql(nql);
+                } else {
+                    excludeNql(nql);
+                }
+            });
+
         });
     </script>
 {% endblock %}

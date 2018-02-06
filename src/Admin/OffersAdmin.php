@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class OffersAdmin extends AbstractAdmin
 {
@@ -19,22 +20,28 @@ class OffersAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('title');
-        $formMapper->add('text');
-        $formMapper->add('active');
-        $formMapper->add('active');
+
         $formMapper
+            ->with('Info')
+            ->add('title')
+            ->add('text')
+            ->add('active')
+            ->end()
+            ->with('Query')
             ->add('makeSlug', ChoiceType::class, [
                 'choices' => [
                     'Audi' => 'audi',
                     'BMW' => 'bmw',
                 ],
-            ]);
-        $formMapper->add('model');
-        $formMapper->add('modelYear');
-        $formMapper->add('includedTlpts');
-        $formMapper->add('excludedTlpts');
-        $formMapper->add('unassignedTlpts');
+            ])
+            ->add('model')
+            ->add('modelYear')
+            ->end()
+            ->with('Vehicles', ['box_class' => 'js-vehicles-section box box-primary'])
+            ->add('includedTlpts', null, ['attr' => ['class' =>'future-hidden']])
+            ->add('excludedTlpts', null, ['attr' => ['class' =>'future-hidden']])
+            ->add('unassignedTlpts', null, ['attr' => ['class' =>'future-hidden']])
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
